@@ -1,0 +1,12 @@
+<h1>View 1</h1>
+
+<div>
+    <ul>
+        <li ng-repeat="cust in customers">
+            {{ cust.name }} - {{ cust.city }}
+        </li>
+    </ul>
+    <button ng-click="addCustomer()">Add Customer</button>
+</div>
+
+<a href="#/view2">View2</a>
