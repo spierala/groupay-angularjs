@@ -1,17 +1,19 @@
-var groupayApp = angular.module('groupay', ['ngRoute']);
+Parse.initialize("QClWidkZclFrGj4dXCKmzDcJbRDLAB3G2aBRBjpy", "zzUUPruvQjNhTdeJ5ByJpI3mUglagorwSgULbWC2");
 
-groupayApp.config(function($routeProvider){
+var app = angular.module('groupay', ['ngRoute']);
+
+app.config(function($routeProvider) {
     $routeProvider
         .when('/view1', {
-            controller: 'SimpleController',
+            controller: 'CreateActivityController',
             templateUrl: 'partials/create-activity.html'
         })
-        .when('/view2', {
-            controller: 'SimpleController',
+        .when('/invite', {
+            controller: 'InviteFriendsController',
             templateUrl: '/partials/invite-friends.html'
         })
-        .when('/view3', {
-            controller: 'SimpleController',
+        .when('/activity/:param', {
+            controller: 'OtherController',
             templateUrl: '/partials/friends.html'
         })
         .when('/view4', {
@@ -28,15 +30,3 @@ groupayApp.config(function($routeProvider){
         })
         .otherwise({redirectTo: '/view1'})
 });
-
-groupayApp.controller('SimpleController', function($scope) {
-    $scope.customers = [
-        {name: 'flo', city: 'Antwerpen'},
-        {name: 'jörg', city: 'Nürnberg'}
-    ];
-
-    $scope.addCustomer = function() {
-        console.log('addCustomer');
-        $scope.customers.push({name: 'Bieke', city: 'Ruislede'});
-    }
-} );

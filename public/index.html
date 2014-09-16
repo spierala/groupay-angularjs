@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html ng-app="groupay">
-<head>
-    <title>Groupay</title>
+    <head>
+        <title>Groupay</title>
 
-    <meta charset="utf-8">
+        <meta charset="utf-8">
 
-    <script src="js/lib/angular.min.js"></script>
-    <script src="js/lib/angular-route.min.js"></script>
-    <script src="js/app/SimpleController.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style/css/style.css">
+    </head>
+    <body>
+        <div class="groupay" ng-view="">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style/css/style.css">
-</head>
-<body>
-    <div class="groupay" ng-view="">
+        </div>
 
-    </div>
-</body>
+        <script src="//www.parsecdn.com/js/parse-1.3.0.min.js"></script>
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/lib/angular-route.min.js"></script>
+
+        <script src="js/app/app.js"></script>
+        <script src="js/app/services/service.js"></script>
+        <script src="js/app/controllers/createActivityController.js"></script>
+        <script src="js/app/controllers/inviteFriendsController.js"></script>
+        <script src="js/app/controllers/otherController.js"></script>
+    </body>
 </html>

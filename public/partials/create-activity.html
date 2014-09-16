@@ -1,20 +1,29 @@
-<h1>Create Activitx</h1>
+<h1>Create Activity</h1>
 <span>
     Here will be an introduction of Groupay...
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
 </span>
+<br/>
+<br/>
 <form>
     <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Enter Activity Title">
+        <input type="text" class="form-control" id="title" ng-model="newActivity.title" placeholder="Enter Activity Title">
     </div>
     <div class="form-group">
         <label for="name">Your Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Your Name">
+        <input type="text" class="form-control" id="name" ng-model="newActivity.name" placeholder="Enter Your Name">
     </div>
     <div class="form-group">
         <label for="email">Your e-Mail Address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+        <input type="email" class="form-control" id="email" ng-model="newActivity.email" placeholder="Enter email">
     </div>
-    <button type="submit" class="btn btn-default" id="submit-form">Create Activity</button>
+    <button class="btn btn-default" ng-click="createActivity()">Create Activity</button>
+    <br/>
+    <br/>
+    <div ng-if="newActivity.id">
+        <span>Activity successfully created<br/>
+        Link: <a href="{{ getActivityLink() }}">{{ getActivityLink() }}</a></span><br/><br/>
+        <a class="btn btn-default" href="#/invite">Invite Friends</a>
+    </div>
 </form>
