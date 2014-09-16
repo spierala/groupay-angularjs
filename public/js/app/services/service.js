@@ -3,6 +3,7 @@ app.factory('Factory', function ($q) {
 
     factory.activityId = 0;
     factory.currentActivity = {};
+    factory.friends = [];
 
     factory.getActivityLink = function() {
         return '#/activity/' + factory.activityId;
@@ -46,6 +47,43 @@ app.factory('Factory', function ($q) {
                 deferred.reject(error.message);
             }
         });
+
+        return deferred.promise;
+    }
+
+    factory.asyncInviteFriend = function(name, email) {
+        var deferred = $q.defer(),
+            Member = Parse.Object.extend("Member");
+
+        //has many relation
+        if (factory.currentActivity) {
+            var relation = factory.currentActivity.relation("members");
+
+            var member = new Member();
+            member.set("name", name);
+            member.set("email", email);
+
+            member.save(null, {
+                success: function(member) {
+                    // The object was saved successfully.
+                    relation.add(member);
+                    factory.currentActivity.save();
+
+                    relation.query().find({
+                        success: function(values) {
+                            factory.friends = []; //clear array from old values
+                            angular.forEach(values, function(value, key) {
+                                factory.friends.push({name: value.attributes.name, email: value.attributes.email});
+                            });
+                            deferred.resolve();
+                        }
+                    });
+                },
+                error: function(movie, error) {
+                    deferred.reject(error.message);
+                }
+            });
+        }
 
         return deferred.promise;
     }

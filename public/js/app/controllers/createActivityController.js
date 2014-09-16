@@ -15,14 +15,4 @@ app.controller('CreateActivityController', function($scope, Factory) {
     $scope.getActivityLink = function() {
         return Factory.getActivityLink();
     }
-
-    $scope.getActivity = function() {
-        var promise = asyncGetActivity('bOt4JNJvx');
-        promise.then(function(result) {
-                $scope.test.result = result.id;
-            },
-            function(reason) {
-                alert('Failed: ' + reason);
-            });
-    }
 });
