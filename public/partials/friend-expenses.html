@@ -1,5 +1,6 @@
-<h1>Sash´ expenses</h1>
+<h1>expenses of {{ currentFriend.name }}</h1>
 <ul class="list-group">
-    <li class="list-group-item">20,00$ PIZZA (las vegas, 13.09.09, 21:00) </li>
-    <li class="list-group-item">10,00$ BEERS (LA, 14.09.09, 20:00)</li>
+    <li class="list-group-item" ng-repeat="expense in expenses">{{ expense.title }} - {{ expense.costs }} </li>
 </ul>
+<br/><br/>
+<a class="btn btn-default" href="#/add-expense">Add Expense</a>

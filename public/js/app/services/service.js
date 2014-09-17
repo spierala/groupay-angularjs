@@ -3,7 +3,9 @@ app.factory('Factory', function ($q) {
 
     factory.activityId = 0;
     factory.currentActivity = {};
+    factory.currentFriend;
     factory.friends = [];
+    factory.expenses = [];
 
     factory.getActivityLink = function() {
         return '#/activity/' + factory.activityId;
@@ -101,6 +103,85 @@ app.factory('Factory', function ($q) {
                             name: value.attributes.name,
                             email: value.attributes.email,
                             id: value.id
+                        });
+                    });
+                    deferred.resolve();
+                }
+            });
+        }
+
+        return deferred.promise;
+    }
+
+    factory.asyncGetFriend = function(id) {
+        var deferred = $q.defer(),
+            Member = Parse.Object.extend("Member"),
+            query = new Parse.Query(Member);
+
+        query.get(id, {
+            success: function(friend) {
+                factory.currentFriend = friend;
+                deferred.resolve(friend);
+            },
+            error: function(friend, error) {
+                deferred.reject(error.message);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    factory.asyncAddExpenseOfFriend = function(title, costs, comment) {
+        var deferred = $q.defer(),
+            Expense = Parse.Object.extend("Expense");
+
+        if(factory.currentFriend) {
+            var relation = factory.currentFriend.relation("expenses"),
+                expense = new Expense();
+
+            expense.set("title", title);
+            expense.set("costs", costs);
+            expense.set("comment", comment);
+
+            expense.save(null, {
+                success: function(expense) {
+                    // The object was saved successfully.
+                    relation.add(expense);
+                    factory.currentFriend.save();
+
+                    relation.query().find({
+                        success: function(values) {
+                            factory.expenses = []; //clear array from old values
+                            angular.forEach(values, function(value, key) {
+                                console.log('expense: ' + value.attributes.title);
+                                factory.expenses.push({title: value.attributes.title});
+                            });
+                            deferred.resolve();
+                        }
+                    });
+                },
+                error: function(movie, error) {
+                    deferred.reject(error.message);
+                }
+            });
+        }
+
+        return deferred.promise;
+    }
+
+    factory.asyncGetExpensesOfFriend = function() {
+        var deferred = $q.defer();
+
+        if(factory.currentFriend) {
+            var relation = factory.currentFriend.relation("expenses");
+            relation.query().find({
+                success: function(values) {
+                    factory.expenses = []; //clear array from old values
+                    angular.forEach(values, function(value, key) {
+                        factory.expenses.push({
+                            title: value.attributes.title,
+                            costs: value.attributes.costs,
+                            comment: value.attributes.comment
                         });
                     });
                     deferred.resolve();

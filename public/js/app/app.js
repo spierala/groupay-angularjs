@@ -16,12 +16,12 @@ app.config(function($routeProvider) {
             controller: 'OtherController',
             templateUrl: '/partials/friends.html'
         })
-        .when('/view4', {
-            controller: 'SimpleController',
+        .when('/friend/:id', {
+            controller: 'FriendController',
             templateUrl: '/partials/friend-expenses.html'
         })
-        .when('/view5', {
-            controller: 'SimpleController',
+        .when('/add-expense', {
+            controller: 'AddExpenseController',
             templateUrl: '/partials/add-expense.html'
         })
         .when('/view6', {

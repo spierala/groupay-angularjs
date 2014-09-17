@@ -26,8 +26,4 @@ app.controller('OtherController', function($scope, $routeParams, Factory) {
             }
         );
     }
-
-    $scope.showFriendExpenses = function(id) {
-        console.log('showFriendExpenses: ' + id);
-    }
 });
