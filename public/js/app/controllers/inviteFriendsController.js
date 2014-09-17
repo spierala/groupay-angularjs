@@ -10,7 +10,7 @@ app.controller('InviteFriendsController', function($scope, Factory) {
         promise.then(function() {
             console.log('activity: ' + Factory.currentActivity.get('title'));
         }, function(reason) {
-            alert('Failed: ' + reason);
+            alert('Parse.com: ' + reason);
         });
     }
 
