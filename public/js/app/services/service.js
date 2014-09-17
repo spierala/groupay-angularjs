@@ -88,5 +88,28 @@ app.factory('Factory', function ($q) {
         return deferred.promise;
     }
 
+    factory.asyncGetFriendsOfCurrentActivity = function() {
+        var deferred = $q.defer();
+
+        if (factory.currentActivity) {
+            var relation = factory.currentActivity.relation("members");
+            relation.query().find({
+                success: function(values) {
+                    factory.friends = []; //clear array from old values
+                    angular.forEach(values, function(value, key) {
+                        factory.friends.push({
+                            name: value.attributes.name,
+                            email: value.attributes.email,
+                            id: value.id
+                        });
+                    });
+                    deferred.resolve();
+                }
+            });
+        }
+
+        return deferred.promise;
+    }
+
     return factory;
 });
