@@ -6,7 +6,7 @@ app.config(function($routeProvider) {
     $routeProvider
         .when('/view1', {
             controller: 'CreateActivityController',
-            templateUrl: 'partials/create-activity.html'
+            templateUrl: 'partials/create-activity.html',
         })
         .when('/invite', {
             controller: 'InviteFriendsController',
@@ -14,15 +14,23 @@ app.config(function($routeProvider) {
         })
         .when('/activity/:param', {
             controller: 'OtherController',
-            templateUrl: '/partials/friends.html'
+            templateUrl: '/partials/friends.html',
+            activetab: 'members'
+        })
+        .when('/activity', {
+            controller: 'OtherController',
+            templateUrl: '/partials/friends.html',
+            activetab: 'members'
         })
         .when('/friend/:id', {
             controller: 'FriendController',
-            templateUrl: '/partials/friend-expenses.html'
+            templateUrl: '/partials/friend-expenses.html',
+            activetab: 'members'
         })
         .when('/add-expense', {
             controller: 'AddExpenseController',
-            templateUrl: '/partials/add-expense.html'
+            templateUrl: '/partials/add-expense.html',
+            activetab: 'members'
         })
         .when('/view6', {
             controller: 'SimpleController',

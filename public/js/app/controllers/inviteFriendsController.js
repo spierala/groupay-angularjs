@@ -1,9 +1,9 @@
 app.controller('InviteFriendsController', function($scope, Factory) {
-    console.log('InviteFriendsController');
-
     var activityId = Factory.activityId;
 
-    getActivity(activityId);
+    if(activityId) {
+        getActivity(activityId);
+    }
 
     function getActivity(id) {
         var promise = Factory.asyncGetActivity(id);

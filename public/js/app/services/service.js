@@ -35,20 +35,22 @@ app.factory('Factory', function ($q) {
         return deferred.promise;
     }
 
-    factory.asyncGetActivity = function(id) {
+    factory.asyncGetActivity = function() {
         var deferred = $q.defer(),
             Activity = Parse.Object.extend("Activity"),
             query = new Parse.Query(Activity);
 
-        query.get(id, {
-            success: function(activity) {
-                factory.currentActivity = activity;
-                deferred.resolve(activity);
-            },
-            error: function(activity, error) {
-                deferred.reject(error.message);
-            }
-        });
+        if(factory.activityId != 0) {
+            query.get(factory.activityId, {
+                success: function(activity) {
+                    factory.currentActivity = activity;
+                    deferred.resolve(activity);
+                },
+                error: function(activity, error) {
+                    deferred.reject(error.message);
+                }
+            });
+        }
 
         return deferred.promise;
     }

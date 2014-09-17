@@ -1,12 +1,14 @@
 app.controller('OtherController', function($scope, $routeParams, Factory) {
     $scope.currentActivity = {};
 
-    var activityId = $routeParams.param;
+    if($routeParams.param !== undefined) {
+        Factory.activityId = $routeParams.param;
+    }
 
-    getActivity(activityId);
+    getActivity();
 
-    function getActivity(id) {
-        var promise = Factory.asyncGetActivity(activityId);
+    function getActivity() {
+        var promise = Factory.asyncGetActivity();
         promise.then(
             function() {
                 $scope.currentActivity.title = Factory.currentActivity.get('title');
