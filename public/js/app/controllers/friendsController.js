@@ -1,4 +1,6 @@
-app.controller('OtherController', function($scope, $routeParams, Factory) {
+app.controller('FriendsController', function($scope, $routeParams, Factory) {
+    console.log('test');
+
     $scope.currentActivity = {};
 
     if($routeParams.param !== undefined) {

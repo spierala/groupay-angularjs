@@ -1,4 +1,4 @@
-app.controller('FriendController', function($scope, $routeParams, Factory) {
+app.controller('FriendExpensesController', function($scope, $routeParams, Factory) {
     $scope.currentFriend = {};
 
     var friendId = $routeParams.id;

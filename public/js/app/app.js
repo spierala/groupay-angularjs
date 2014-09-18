@@ -13,17 +13,17 @@ app.config(function($routeProvider) {
             templateUrl: '/partials/invite-friends.html'
         })
         .when('/activity/:param', {
-            controller: 'OtherController',
+            controller: 'FriendsController',
             templateUrl: '/partials/friends.html',
             activetab: 'members'
         })
         .when('/activity', {
-            controller: 'OtherController',
+            controller: 'FriendsController',
             templateUrl: '/partials/friends.html',
             activetab: 'members'
         })
         .when('/friend/:id', {
-            controller: 'FriendController',
+            controller: 'FriendExpensesController',
             templateUrl: '/partials/friend-expenses.html',
             activetab: 'members'
         })
