@@ -1,4 +1,4 @@
-app.controller('CreateActivityController', function($scope, Factory) {
+app.controller('CreateActivityController', function($scope, $location, Factory) {
     $scope.newActivity = {};
     $scope.createActivity = function() {
         var promise = Factory.asyncSaveActivity($scope.newActivity.title, $scope.newActivity.name, $scope.newActivity.email);
@@ -9,6 +9,7 @@ app.controller('CreateActivityController', function($scope, Factory) {
     }
 
     $scope.getActivityLink = function() {
-        return Factory.getActivityLink();
+        return $location.host() + '/index.html' + '#/activity/' + Factory.activityId;
     }
+
 });

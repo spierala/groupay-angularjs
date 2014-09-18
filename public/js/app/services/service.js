@@ -8,10 +8,6 @@ app.factory('Factory', function ($q) {
     factory.expenses = [];
     factory.totalCosts = 0;
 
-    factory.getActivityLink = function() {
-        return '#/activity/' + factory.activityId;
-    }
-
     /* EXTEND PARSE.COM OBJECTS
      -------------------------------------------- */
     var Member = Parse.Object.extend("Member", {
