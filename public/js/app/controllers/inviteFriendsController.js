@@ -10,10 +10,6 @@ app.controller('InviteFriendsController', function($scope, Factory) {
         );
     }
 
-    $scope.newFriend = {};
-    $scope.newFriend.name = 'sash';
-    $scope.newFriend.email = 'sashion@gmx.de';
-
     $scope.invite = function() {
         var promise = Factory.asyncInviteFriend($scope.newFriend.name, $scope.newFriend.email);
         promise.then(function() {
