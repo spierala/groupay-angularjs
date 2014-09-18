@@ -32,9 +32,10 @@ app.config(function($routeProvider) {
             templateUrl: '/partials/add-expense.html',
             activetab: 'members'
         })
-        .when('/view6', {
-            controller: 'SimpleController',
-            templateUrl: '/partials/calculation.html'
+        .when('/calculation', {
+            controller: 'CalculationController',
+            templateUrl: '/partials/calculation.html',
+            activetab: 'calculation'
         })
         .otherwise({redirectTo: '/view1'})
 });

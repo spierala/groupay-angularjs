@@ -1,10 +1,10 @@
+<div ng-include src="'partials/navigation.html'"></div>
+
 <h1>Calculation</h1>
-<span>Total Costs: </span><span>1.200,00$</span><br/>
-<span>Costs per Person: </span><span>400,00$</span>
+<span><strong>Total Costs:</strong> {{ getTotalCosts() }}</span><br/>
+<span><strong>Costs per Person:</strong> {{ getCostsPerPerson() }}</span>
 <br/>
 <br/>
 <ul class="list-group">
-    <li class="list-group-item">Sash (-300,00$) pays 100,00$</li>
-    <li class="list-group-item">Rutzmic (-500,00$) gets 100,00$</li>
-    <li class="list-group-item">Me (-400,00$)</li>
+    <li class="list-group-item" ng-repeat="friend in friends">{{ friend.name }} {{ friend.costs }}</li>
 </ul>

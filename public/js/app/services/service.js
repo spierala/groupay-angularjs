@@ -6,10 +6,35 @@ app.factory('Factory', function ($q) {
     factory.currentFriend;
     factory.friends = [];
     factory.expenses = [];
+    factory.totalCosts = 0;
 
     factory.getActivityLink = function() {
         return '#/activity/' + factory.activityId;
     }
+
+    /* EXTEND PARSE.COM OBJECTS
+     -------------------------------------------- */
+    var Member = Parse.Object.extend("Member", {
+        // Instance methods
+        calc: function () {
+            var deferred = $q.defer();
+
+            var costs = 0;
+            var relation = this.relation("expenses");
+            relation.query().find({
+                success: function(values) {
+                    costs = 0;
+                    angular.forEach(values, function(value, key) {
+                        costs += Number(value.attributes.costs);
+                    });
+                    factory.totalCosts += costs;
+                    deferred.resolve(costs);
+                }
+            });
+
+            return deferred.promise;
+        }
+    });
 
     /* ASYNC PARSE.COM CALLS
      -------------------------------------------- */
@@ -92,8 +117,11 @@ app.factory('Factory', function ($q) {
         return deferred.promise;
     }
 
-    factory.asyncGetFriendsOfCurrentActivity = function() {
+    factory.asyncGetFriendsOfCurrentActivity = function(calculateCosts) {
+        calculateCosts = calculateCosts || false; //set default for calculateCosts parameter
+
         var deferred = $q.defer();
+        factory.totalCosts = 0; //reset total costs
 
         if (factory.currentActivity) {
             var relation = factory.currentActivity.relation("members");
@@ -101,11 +129,25 @@ app.factory('Factory', function ($q) {
                 success: function(values) {
                     factory.friends = []; //clear array from old values
                     angular.forEach(values, function(value, key) {
-                        factory.friends.push({
-                            name: value.attributes.name,
-                            email: value.attributes.email,
-                            id: value.id
-                        });
+                        if(calculateCosts == true) {
+                            var promise = value.calc();
+                            promise.then(
+                                function(costs) {
+                                    factory.friends.push({
+                                        name: value.attributes.name,
+                                        email: value.attributes.email,
+                                        id: value.id,
+                                        costs: costs
+                                    });
+                                }
+                            );
+                        } else {
+                            factory.friends.push({
+                                name: value.attributes.name,
+                                email: value.attributes.email,
+                                id: value.id
+                            });
+                        }
                     });
                     deferred.resolve();
                 }
