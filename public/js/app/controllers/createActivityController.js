@@ -9,7 +9,7 @@ app.controller('CreateActivityController', function($scope, $location, Factory) 
     }
 
     $scope.getActivityLink = function() {
-        return $location.host() + '/index.html' + '#/activity/' + Factory.activityId;
+        return $location.host() + '#/activity/' + Factory.activityId;
     }
 
 });
