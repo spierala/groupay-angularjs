@@ -52,6 +52,7 @@ app.factory('Factory', function ($q) {
             {
                 success: function(activity) {
                     factory.activityId = activity.id;
+                    factory.currentActivity = activity;
                     deferred.resolve(activity);
                 }
             }

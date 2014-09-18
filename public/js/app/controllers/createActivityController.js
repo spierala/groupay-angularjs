@@ -9,6 +9,7 @@ app.controller('CreateActivityController', function($scope, Factory) {
         var promise = Factory.asyncSaveActivity($scope.newActivity.title, $scope.newActivity.name, $scope.newActivity.email);
         promise.then(function() {
             $scope.newActivity.id = Factory.activityId;
+            Factory.asyncInviteFriend($scope.newActivity.name, $scope.newActivity.email);
         });
     }
 

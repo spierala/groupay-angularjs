@@ -1,17 +1,13 @@
 app.controller('InviteFriendsController', function($scope, Factory) {
-    var activityId = Factory.activityId;
+    getFriends();
 
-    if(activityId) {
-        getActivity(activityId);
-    }
-
-    function getActivity(id) {
-        var promise = Factory.asyncGetActivity(id);
-        promise.then(function() {
-            console.log('activity: ' + Factory.currentActivity.get('title'));
-        }, function(reason) {
-            alert('Parse.com: ' + reason);
-        });
+    function getFriends() {
+        var promise = Factory.asyncGetFriendsOfCurrentActivity();
+        promise.then(
+            function() {
+                $scope.friends = Factory.friends;
+            }
+        );
     }
 
     $scope.newFriend = {};
