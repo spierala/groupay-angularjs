@@ -1,22 +1,36 @@
 <div ng-if="newActivity.id">
-    <div class="alert alert-success">Activity successfully created!</div>
-    <p>This is your Activity Link:<br/><a href="http://{{ getActivityLink() }}">{{ getActivityLink() }}</a></p>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Activity "{{newActivity.title}}" successfully created!</h3>
+        </div>
+        <div class="panel-body">
+            This is your Activity Link:<br/><a href="http://{{ getActivityLink() }}">{{ getActivityLink() }}</a>
+        </div>
+    </div>
 </div>
-<h1>Invite Friends</h1>
-<form>
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter Friend Name" ng-model="newFriend.name">
+
+<p>Invite friends to the Activity "{{newActivity.title}}":</p>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Invite Friend</h3>
     </div>
-    <div class="form-group">
-        <label for="email">Your e-Mail Address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="newFriend.email">
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Friend Name" ng-model="newFriend.name">
+            </div>
+            <div class="form-group">
+                <label for="email">Your e-Mail Address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="newFriend.email">
+            </div>
+            <button class="btn btn-default" ng-click="invite()">Invite Friend</button>
+        </form>
     </div>
-    <button class="btn btn-default" ng-click="invite()">Invite Friend</button>
-    <br/>
-    <br/>
-    <h4>Invited Friends</h4>
-    <ul class="list-group">
-        <li class="list-group-item" ng-repeat="friend in friends">{{ friend.name }}</li>
-    </ul>
-</form>
+</div>
+
+<h4>Activity Members</h4>
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="friend in friends">{{ friend.name }}</li>
+</ul>

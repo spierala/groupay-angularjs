@@ -1,6 +1,7 @@
 app.controller('InviteFriendsController', function($scope, $location, Factory) {
     $scope.newActivity = {};
-    $scope.newActivity.id = Factory.activityId;
+    $scope.newActivity.id = Factory.currentActivity.id;
+    $scope.newActivity.title = Factory.currentActivity.get('title');
 
     getFriends();
 
