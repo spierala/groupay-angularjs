@@ -21,7 +21,7 @@ app.factory('Factory', function ($q) {
                 success: function(values) {
                     costs = 0;
                     angular.forEach(values, function(value, key) {
-                        costs += Number(value.attributes.costs);
+                        costs += Number(value.attributes.amount);
                     });
                     factory.totalCosts += costs;
                     deferred.resolve(costs);
@@ -172,7 +172,7 @@ app.factory('Factory', function ($q) {
         return deferred.promise;
     }
 
-    factory.asyncAddExpenseOfFriend = function(title, costs, comment) {
+    factory.asyncAddExpenseOfFriend = function(title, amount, comment) {
         var deferred = $q.defer(),
             Expense = Parse.Object.extend("Expense");
 
@@ -181,7 +181,7 @@ app.factory('Factory', function ($q) {
                 expense = new Expense();
 
             expense.set("title", title);
-            expense.set("costs", costs);
+            expense.set("amount", amount);
             expense.set("comment", comment);
 
             expense.save(null, {
@@ -220,7 +220,7 @@ app.factory('Factory', function ($q) {
                     angular.forEach(values, function(value, key) {
                         factory.expenses.push({
                             title: value.attributes.title,
-                            costs: value.attributes.costs,
+                            amount: value.attributes.amount,
                             comment: value.attributes.comment
                         });
                     });
