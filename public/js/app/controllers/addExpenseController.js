@@ -1,13 +1,23 @@
-app.controller('AddExpenseController', function($scope, $window, Factory) {
+app.controller('AddExpenseController', function($scope, $location, Factory) {
     $scope.currentFriend = {};
+    $scope.newExpense = {};
 
-    $scope.currentFriend.name = Factory.currentFriend.get('name');
+    if( Factory.currentFriend != null) {
+        $scope.currentFriend.name = Factory.currentFriend.get('name');
+    }
 
-    $scope.addExpense = function() {
-        var promise = Factory.asyncAddExpenseOfFriend($scope.newExpense.title, $scope.newExpense.costs, $scope.newExpense.comment);
+    $scope.submitForm = function(isValid) {
+        $scope.submitted = true;
+        if (isValid) {
+            addExpense();
+        }
+    };
+
+    function addExpense() {
+        var promise = Factory.asyncAddExpenseOfFriend($scope.newExpense.title, $scope.newExpense.amount, $scope.newExpense.comment);
         promise.then(
             function() {
-                $window.history.back();
+                $location.path('/activity');
             },
             function(reason) {
                 alert('Parse.com: ' + reason);

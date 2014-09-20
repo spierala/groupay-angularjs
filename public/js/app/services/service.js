@@ -2,8 +2,8 @@ app.factory('Factory', function ($q) {
     var factory = {};
 
     factory.activityId = 0;
-    factory.currentActivity = {};
-    factory.currentFriend;
+    factory.currentActivity = null;
+    factory.currentFriend = null;
     factory.friends = [];
     factory.expenses = [];
     factory.totalCosts = 0;
@@ -82,7 +82,7 @@ app.factory('Factory', function ($q) {
             Member = Parse.Object.extend("Member");
 
         //has many relation
-        if (factory.currentActivity) {
+        if (factory.currentActivity != null) {
             var relation = factory.currentActivity.relation("members");
 
             var member = new Member();
@@ -120,7 +120,7 @@ app.factory('Factory', function ($q) {
         var deferred = $q.defer();
         factory.totalCosts = 0; //reset total costs
 
-        if (factory.currentActivity) {
+        if (factory.currentActivity != null) {
             var relation = factory.currentActivity.relation("members");
             relation.query().find({
                 success: function(values) {
@@ -194,7 +194,6 @@ app.factory('Factory', function ($q) {
                         success: function(values) {
                             factory.expenses = []; //clear array from old values
                             angular.forEach(values, function(value, key) {
-                                console.log('expense: ' + value.attributes.title);
                                 factory.expenses.push({title: value.attributes.title});
                             });
                             deferred.resolve();

@@ -8,20 +8,23 @@
         <h3 class="panel-title">Create a new activity</h3>
     </div>
     <div class="panel-body">
-        <form>
-            <div class="form-group">
+        <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+            <div class="form-group" ng-class="{ 'has-error' : userForm.title.$invalid && submitted }">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" ng-model="newActivity.title" placeholder="Enter Activity Title">
+                <input type="text" class="form-control" id="title" name="title" ng-model="newActivity.title" placeholder="Enter Activity Title" required>
+                <p ng-show="userForm.title.$invalid && submitted" class="help-block">Title is required.</p>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && submitted}">
                 <label for="name">Your Name</label>
-                <input type="text" class="form-control" id="name" ng-model="newActivity.name" placeholder="Enter Your Name">
+                <input type="text" class="form-control" id="name" name="name" ng-model="newActivity.name" placeholder="Enter Your Name" required>
+                <p ng-show="userForm.name.$invalid && submitted" class="help-block">Name is required.</p>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && submitted}">
                 <label for="email">Your e-Mail Address</label>
-                <input type="email" class="form-control" id="email" ng-model="newActivity.email" placeholder="Enter Your e-Mail">
+                <input type="email" class="form-control" id="email" name="email" ng-model="newActivity.email" placeholder="Enter Your e-Mail" required>
+                <p ng-show="userForm.email.$invalid && submitted" class="help-block">Enter a valid email.</p>
             </div>
-            <button class="btn btn-default" ng-click="createActivity()">Create Activity</button>
+            <button class="btn btn-default" type="submit">Create Activity</button>
         </form>
     </div>
 </div>
