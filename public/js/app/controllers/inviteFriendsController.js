@@ -1,4 +1,7 @@
-app.controller('InviteFriendsController', function($scope, Factory) {
+app.controller('InviteFriendsController', function($scope, $location, Factory) {
+    $scope.newActivity = {};
+    $scope.newActivity.id = Factory.activityId;
+
     getFriends();
 
     function getFriends() {
@@ -15,5 +18,9 @@ app.controller('InviteFriendsController', function($scope, Factory) {
         promise.then(function() {
             $scope.friends = Factory.friends;
         });
+    }
+
+    $scope.getActivityLink = function() {
+        return $location.host() + '#/activity/' + Factory.activityId;
     }
 });

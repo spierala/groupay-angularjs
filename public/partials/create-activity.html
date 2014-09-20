@@ -1,6 +1,6 @@
 <h1>Create Activity</h1>
 <p>'groupay' manages the expenses of a group (e.g. during a holiday).</p>
-<p>You can create a 'groupay' activity below and invite your friends.</p>
+<p>Create a 'groupay' activity below...</p>
 <form>
     <div class="form-group">
         <label for="title">Title</label>
@@ -15,11 +15,4 @@
         <input type="email" class="form-control" id="email" ng-model="newActivity.email" placeholder="Enter Your e-Mail">
     </div>
     <button class="btn btn-default" ng-click="createActivity()">Create Activity</button>
-    <br/>
-    <br/>
-    <div ng-if="newActivity.id">
-        <span>Activity successfully created<br/>
-        Link: <a href="http://{{ getActivityLink() }}">{{ getActivityLink() }}</a></span><br/><br/>
-        <a class="btn btn-default" href="#/invite">Invite Friends</a>
-    </div>
 </form>
