@@ -1,4 +1,4 @@
-app.controller('AddExpenseController', function($scope, $location, Factory) {
+app.controller('AddExpenseController', function($scope, $window, Factory) {
     $scope.currentFriend = {};
     $scope.newExpense = {};
 
@@ -17,7 +17,7 @@ app.controller('AddExpenseController', function($scope, $location, Factory) {
         var promise = Factory.asyncAddExpenseOfFriend($scope.newExpense.title, $scope.newExpense.amount, $scope.newExpense.comment);
         promise.then(
             function() {
-                $location.path('/activity');
+                $window.history.back();
             },
             function(reason) {
                 alert('Parse.com: ' + reason);
