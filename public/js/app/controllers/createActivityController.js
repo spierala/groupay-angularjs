@@ -1,6 +1,4 @@
 app.controller('CreateActivityController', function($scope, $location, Factory) {
-    $scope.newActivity = {};
-
     $scope.submitForm = function(isValid) {
         $scope.submitted = true;
         if (isValid) {
@@ -9,12 +7,18 @@ app.controller('CreateActivityController', function($scope, $location, Factory) 
     };
 
     function createActivity() {
-        var promise = Factory.asyncSaveActivity($scope.newActivity.title, $scope.newActivity.name, $scope.newActivity.email);
-        promise.then(function() {
-            var promiseInviteFriend = Factory.asyncInviteFriend($scope.newActivity.name, $scope.newActivity.email);
-            promiseInviteFriend.then(function () {
-                $location.path('/invite');
-            });
+        var activity = {
+            title: $scope.newActivity.title,
+            members: [{
+                name: $scope.newActivity.name,
+                email: $scope.newActivity.email
+            }]
+        }
+
+        var promise = Factory.createActivity(activity);
+        promise.then(function(result) {
+            Factory.currentActivity = result.data;
+            $location.path('/invite');
         });
     }
 });

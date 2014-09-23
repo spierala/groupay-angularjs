@@ -1,9 +1,8 @@
-app.controller('AddExpenseController', function($scope, $window, Factory) {
-    $scope.currentFriend = {};
+app.controller('AddExpenseController', function($scope, $location, Factory) {
     $scope.newExpense = {};
 
-    if( Factory.currentFriend != null) {
-        $scope.currentFriend.name = Factory.currentFriend.get('name');
+    if(Factory.currentMember != null) {
+        $scope.currentFriend = Factory.currentMember;
     }
 
     $scope.submitForm = function(isValid) {
@@ -14,14 +13,26 @@ app.controller('AddExpenseController', function($scope, $window, Factory) {
     };
 
     function addExpense() {
-        var promise = Factory.asyncAddExpenseOfFriend($scope.newExpense.title, $scope.newExpense.amount, $scope.newExpense.comment);
-        promise.then(
-            function() {
-                $window.history.back();
-            },
-            function(reason) {
-                alert('Parse.com: ' + reason);
-            }
-        );
+        var targetMember = {};
+        var newExpense = {
+            'title' : $scope.newExpense.title,
+            'amount' : $scope.newExpense.amount,
+            'comment' : $scope.newExpense.comment
+        }
+
+        //search member in currentActivity
+        angular.forEach(Factory.currentActivity.members, function(member, key) {
+            if(Factory.currentMember._id == member._id) {
+                targetMember = member;
+            };
+        });
+        targetMember.expenses.push(newExpense);
+
+        //save activity
+        var promise = Factory.updateActivity(Factory.currentActivity);
+        promise.then(function(result){
+            Factory.currentActivity = result.data;
+            $location.path('/friend');
+        });
     }
 });

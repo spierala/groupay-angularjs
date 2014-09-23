@@ -1,10 +1,8 @@
-Parse.initialize("QClWidkZclFrGj4dXCKmzDcJbRDLAB3G2aBRBjpy", "zzUUPruvQjNhTdeJ5ByJpI3mUglagorwSgULbWC2");
-
 var app = angular.module('groupay', ['ngRoute']);
 
 app.config(function($routeProvider) {
     $routeProvider
-        .when('/view1', {
+        .when('/', {
             controller: 'CreateActivityController',
             templateUrl: 'partials/create-activity.html',
         })
@@ -22,7 +20,7 @@ app.config(function($routeProvider) {
             templateUrl: '/partials/friends.html',
             activetab: 'members'
         })
-        .when('/friend/:id', {
+        .when('/friend', {
             controller: 'FriendExpensesController',
             templateUrl: '/partials/friend-expenses.html',
             activetab: 'members'
@@ -37,5 +35,5 @@ app.config(function($routeProvider) {
             templateUrl: '/partials/calculation.html',
             activetab: 'calculation'
         })
-        .otherwise({redirectTo: '/view1'})
+        .otherwise({redirectTo: '/'})
 });

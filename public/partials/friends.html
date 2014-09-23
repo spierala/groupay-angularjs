@@ -1,6 +1,6 @@
 <div ng-include src="'partials/navigation.html'"></div>
 
-<h1>Friends <small>{{ currentActivity.title }}</small></h1>
+<h1>Friends <small>{{ activity.title }}</small></h1>
 <ul class="list-group">
-    <a ng-repeat="friend in friends" href="#/friend/{{ friend.id }}"><li class="list-group-item">{{ friend.name }}</li></a>
+    <a href="" ng-repeat="member in activity.members" ng-click="onMemberListItemClicked(member)"><li class="list-group-item">{{ member.name }}</li></a>
 </ul>

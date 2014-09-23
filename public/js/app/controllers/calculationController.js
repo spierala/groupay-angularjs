@@ -1,20 +1,9 @@
 app.controller('CalculationController', function($scope, Factory) {
-    getFriends();
-
-    function getFriends() {
-        var promise = Factory.asyncGetFriendsOfCurrentActivity(true);
-        promise.then(
-            function() {
-                $scope.friends = Factory.friends;
-            }
-        );
+    if(Factory.currentActivity != null) {
+        $scope.activity = Factory.currentActivity;
     }
 
-    $scope.getTotalCosts = function() {
-        return Factory.totalCosts;
-    }
-
-    $scope.getCostsPerPerson = function() {
-        return (Factory.totalCosts / Factory.friends.length).toFixed(2);
+    $scope.costsPerPerson = function() {
+        return (Factory.currentActivity.totalCosts / Factory.currentActivity.members.length).toFixed(2);
     }
 });

@@ -1,31 +1,22 @@
-app.controller('FriendsController', function($scope, $routeParams, Factory) {
-    $scope.currentActivity = {};
-
+app.controller('FriendsController', function($scope, $routeParams, $location, Factory) {
     if($routeParams.param !== undefined) {
-        Factory.activityId = $routeParams.param;
+        getActivity($routeParams.param);
+    } else if(Factory.currentActivity != null) {
+        $scope.activity = Factory.currentActivity;
     }
 
-    getActivity();
-
-    function getActivity() {
-        var promise = Factory.asyncGetActivity();
+    function getActivity(activityId) {
+        var promise = Factory.getActivityById(activityId);
         promise.then(
-            function() {
-                $scope.currentActivity.title = Factory.currentActivity.get('title');
-                getFriends();
-            },
-            function(reason) {
-                alert('Parse.com: ' + reason);
+            function(result) {
+                Factory.currentActivity = result.data;
+                $scope.activity = Factory.currentActivity;
             }
         );
     }
 
-    function getFriends() {
-        var promise = Factory.asyncGetFriendsOfCurrentActivity();
-        promise.then(
-            function() {
-                $scope.friends = Factory.friends;
-            }
-        );
+    $scope.onMemberListItemClicked = function(member) {
+        Factory.currentMember = member;
+        $location.path('/friend');
     }
 });

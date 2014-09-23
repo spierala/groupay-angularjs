@@ -2,10 +2,10 @@
 
 <h1>Calculation</h1>
 <div class="well">
-    <span><strong>Total Costs:</strong> {{ getTotalCosts() }}</span><br/>
-    <span><strong>Costs per Person:</strong> {{ getCostsPerPerson() }}</span>
+    <span><strong>Total Costs:</strong> {{ activity.totalCosts }}</span><br/>
+    <span><strong>Costs per Person:</strong> {{ costsPerPerson() }}</span>
 </div>
 <h4>Individual Costs:</h4>
 <ul class="list-group">
-    <li class="list-group-item" ng-repeat="friend in friends">{{ friend.name }} [{{ friend.costs }}]</li>
+    <li class="list-group-item" ng-repeat="member in activity.members">{{ member.name }} [{{ member.totalCosts }}]</li>
 </ul>

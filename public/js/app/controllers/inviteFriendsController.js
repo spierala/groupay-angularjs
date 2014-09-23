@@ -1,41 +1,39 @@
 app.controller('InviteFriendsController', function($scope, $location, Factory) {
-    getFriends();
-
     if(Factory.currentActivity != null) {
         $scope.newActivity = {};
-        $scope.newActivity.id = Factory.currentActivity.id;
-        $scope.newActivity.title = Factory.currentActivity.get('title');
+        $scope.newActivity.id = Factory.currentActivity._id;
+        $scope.newActivity.title = Factory.currentActivity.title;
+        $scope.friends = Factory.currentActivity.members;
     }
 
     $scope.submitForm = function(isValid) {
-        console.log("submit");
         $scope.submitted = true;
         if (isValid) {
             invite();
+            $scope.newFriend.name = "";
+            $scope.newFriend.email = "";
+            $scope.submitted = false;
         }
     }
 
-    function getFriends() {
-        var promise = Factory.asyncGetFriendsOfCurrentActivity();
-        promise.then(
-            function() {
-                $scope.friends = Factory.friends;
-            }
-        );
-    }
-
     function invite() {
-        var promise = Factory.asyncInviteFriend($scope.newFriend.name, $scope.newFriend.email);
-        promise.then(function() {
-            $scope.friends = Factory.friends;
-            $scope.submitted = false;
-            $scope.newFriend.name = "";
-            $scope.newFriend.email = "";
-            getFriends();
+        var newMember = {
+            name: $scope.newFriend.name,
+            email: $scope.newFriend.email
+        }
+        Factory.currentActivity.members.push(newMember);
+        var promise = Factory.updateActivity(Factory.currentActivity);
+        promise.then(function(result){
+            Factory.currentActivity = result.data;
         });
     }
 
+    // TODO: this function is called twice by the template
     $scope.getActivityLink = function() {
-        return $location.host() + '#/activity/' + Factory.activityId;
+        var port = "";
+        if($location.port() != undefined) {
+            port = ":" + $location.port() + "/";
+        }
+        return $location.host() + port + '#/activity/' + Factory.currentActivity._id;
     }
 });
