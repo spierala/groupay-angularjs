@@ -13,19 +13,13 @@ app.controller('AddExpenseController', function($scope, $location, Factory) {
     };
 
     function addExpense() {
-        var targetMember = {};
+        var targetMember = Factory.getCurrentMemberOfActivity();
         var newExpense = {
             'title' : $scope.newExpense.title,
             'amount' : $scope.newExpense.amount,
             'comment' : $scope.newExpense.comment
         }
 
-        //search member in currentActivity
-        angular.forEach(Factory.currentActivity.members, function(member, key) {
-            if(Factory.currentMember._id == member._id) {
-                targetMember = member;
-            };
-        });
         targetMember.expenses.push(newExpense);
 
         //save activity

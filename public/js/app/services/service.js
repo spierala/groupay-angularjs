@@ -2,7 +2,17 @@ app.factory('Factory', function ($q, $http) {
     var factory = {};
 
     factory.currentActivity = null;
-    factory.currentMember = null;
+    factory.currentMemberId = null;
+
+    factory.getCurrentMemberOfActivity = function() {
+        var retMember;
+        angular.forEach(factory.currentActivity.members, function(member, key) {
+            if(factory.currentMemberId == member._id) {
+                retMember = member;
+            };
+        });
+        return retMember;
+    }
 
     /* RESTFUL SERVICE
      -------------------------------------------- */

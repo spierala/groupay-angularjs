@@ -16,7 +16,7 @@ app.controller('FriendsController', function($scope, $routeParams, $location, Fa
     }
 
     $scope.onMemberListItemClicked = function(member) {
-        Factory.currentMember = member;
+        Factory.currentMemberId = member._id;
         $location.path('/friend');
     }
 });
