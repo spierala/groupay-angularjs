@@ -20,8 +20,6 @@ module.exports = function(app) {
         members: [memberSchema]
     });
 
-    var Activity = mongoose.model('Activity', activitySchema);
-
     activitySchema.methods.calcTotalCosts = function() {
         var totalCosts = 0;
         this.members.forEach(function(member) {
@@ -39,6 +37,8 @@ module.exports = function(app) {
             if (err) console.log(err);
         });
     }
+
+    var Activity = mongoose.model('Activity', activitySchema);
 
     //get activity by id
     app.get('/api/activity/:id', function(req, res) {
