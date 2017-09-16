@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Activity} from "../model/activity";
+import { Component } from '@angular/core';
+import { Activity } from '../model/activity';
 import { DataService } from '../data.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { DataService } from '../data.service';
   templateUrl: './create-new-activity.component.html',
   styleUrls: ['./create-new-activity.component.scss']
 })
-export class CreateNewActivityComponent implements OnInit {
+export class CreateNewActivityComponent {
 
   activity:Activity = new Activity();
 
@@ -17,8 +17,4 @@ export class CreateNewActivityComponent implements OnInit {
     this.dataService.createActivity(this.activity)
       .subscribe(activity => this.activity = activity);
   }
-
-  ngOnInit() {
-  }
-
 }

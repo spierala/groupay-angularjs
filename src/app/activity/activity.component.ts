@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
-import {Activity} from "../model/activity";
+import { Activity } from '../model/activity';
 
 @Component({
   selector: 'app-activity',
@@ -10,12 +10,12 @@ import {Activity} from "../model/activity";
 })
 export class ActivityComponent implements OnInit {
 
+  activity:Activity = new Activity();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private dataService: DataService
   ) {}
-
-  activity:Activity = new Activity();
 
   private getActivity(id) {
      this.dataService.getActivityById(id)
