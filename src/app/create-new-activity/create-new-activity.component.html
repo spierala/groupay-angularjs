@@ -2,12 +2,12 @@
   Create a new Activity
 </h3>
 
-<form>
+<form name="createActivity">
   <div class="card gp-card-activity-data">
     <div class="card-body">
         <div class="form-group">
           <label for="activityName">Activity Name:</label>
-          <input type="text" class="form-control" id="activityName" placeholder="Enter name of Activity">
+          <input type="text" class="form-control" id="activityName" name="activityName" placeholder="Enter name of Activity" [(ngModel)]="activity.title">
         </div>
     </div>
   </div>
@@ -18,12 +18,17 @@
       <h5>You:</h5>
       <div class="form-group">
         <label for="creatorName">Name:</label>
-        <input type="text" class="form-control" id="creatorName" placeholder="Enter your name">
+        <input
+          type="text" class="form-control" id="creatorName" placeholder="Enter your name">
       </div>
       <div class="form-group">
         <label for="creatorEmail">Email address</label>
         <input type="email" class="form-control" id="creatorEmail" placeholder="Enter your email">
       </div>
     </div>
+  </div>
+
+  <div class="gp-page-actions">
+    <button type="submit" class="btn btn-primary" (click)="createActivity()">Create Activity</button>
   </div>
 </form>

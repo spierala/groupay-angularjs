@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { DataService } from './data.service';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { CreateNewActivityComponent } from './create-new-activity/create-new-activity.component';
 
 
@@ -26,7 +27,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes
     ),
-    BrowserModule, HttpModule
+    BrowserModule,
+    HttpModule,
+    FormsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
