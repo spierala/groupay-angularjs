@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CreateNewActivityComponent } from './create-new-activity/create-new-activity.component';
+import { ActivityComponent } from './activity/activity.component';
 
 
 const appRoutes: Routes = [
@@ -15,13 +16,19 @@ const appRoutes: Routes = [
     component: CreateNewActivityComponent,
     data: { title: 'Create a new Activity' }
   },
+  {
+    path: 'activity/:id',
+    component: ActivityComponent,
+    data: { title: 'Activity' }
+  },
   { path: '**', redirectTo: '/new' }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateNewActivityComponent
+    CreateNewActivityComponent,
+    ActivityComponent
   ],
   imports: [
     RouterModule.forRoot(
