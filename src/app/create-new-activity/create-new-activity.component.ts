@@ -34,7 +34,7 @@ export class CreateNewActivityComponent implements OnInit {
   }
 
   private navigateToActivityPage(activity:Activity) {
-    this.router.navigate(['activity', '123456']);
+    this.router.navigate(['activity', activity['_id']]); //TODO make models real Mongoose models to avoid dirty fix for accessing id via activity['_id']
   }
 
   ngOnInit() {
