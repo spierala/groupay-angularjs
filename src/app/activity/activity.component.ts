@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { Activity } from '../model/activity';
+import {Member} from "../model/member";
 
 @Component({
   selector: 'app-activity',
@@ -11,15 +12,32 @@ import { Activity } from '../model/activity';
 export class ActivityComponent implements OnInit {
 
   activity:Activity = new Activity();
+  currentMember:Member;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router:Router,
     private dataService: DataService
   ) {}
 
   private getActivity(id) {
      this.dataService.getActivityById(id)
-       .subscribe(activity => this.activity = activity);
+       .subscribe(activity => this.onActivityReceived(activity));
+  }
+
+  private onActivityReceived(activity:Activity) {
+    this.activity = activity;
+    this.dataService.setCurrentActivity(activity);
+    this.currentMember = this.dataService.getCurrentMember();
+  }
+
+  selectMember(member) {
+    this.dataService.setCurrentMember(member);
+    this.currentMember = member;
+  }
+
+  goToExpensesPage() {
+    this.router.navigateByUrl('/add-expense');
   }
 
   ngOnInit() {

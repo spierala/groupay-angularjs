@@ -38,7 +38,10 @@ export class CreateNewActivityComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activity = new Activity();
-    this.activity.members = [new Member(), new Member()];
+    this.activity = this.dataService.getCurrentActivity();
+    if(this.activity == null) {
+      this.activity = new Activity();
+      this.activity.members = [new Member(), new Member()];
+    }
   }
 }

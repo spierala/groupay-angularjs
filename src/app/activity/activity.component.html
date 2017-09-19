@@ -1,1 +1,15 @@
 <h3>{{activity.title}}</h3>
+
+<h4>Members:</h4>
+<ul>
+  <li *ngFor="let member of activity.members" (click)="selectMember(member)">{{member.name}}
+    <ul>
+      <li *ngFor="let expense of member.expenses">{{expense.title}} {{expense.amount}}</li>
+    </ul>
+  </li>
+</ul>
+
+<h5>You are: {{currentMember?.name}}</h5>
+
+
+<button class="btn btn-primary" (click)="goToExpensesPage()">Add Expense</button>

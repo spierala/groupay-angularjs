@@ -20,25 +20,26 @@ module.exports = function(app) {
         members: [memberSchema]
     });
 
-    activitySchema.methods.calcTotalCosts = function() {
-        var totalCosts = 0;
-        this.members.forEach(function(member) {
-            var memberCosts = 0;
-            member.expenses.forEach(function(expense){
-                totalCosts += expense.amount;
-                memberCosts += expense.amount;
-            });
-            member.totalCosts = memberCosts;
-            member.save();
-        });
-
-        this.totalCosts = totalCosts;
-        this.save(function (err, result) {
-            if (err) console.log(err);
-        });
-    }
+    // activitySchema.methods.calcTotalCosts = function() {
+    //     var totalCosts = 0;
+    //     this.members.forEach(function(member) {
+    //         var memberCosts = 0;
+    //         member.expenses.forEach(function(expense){
+    //             totalCosts += expense.amount;
+    //             memberCosts += expense.amount;
+    //         });
+    //         member.totalCosts = memberCosts;
+    //         member.save();
+    //     });
+    //
+    //     this.totalCosts = totalCosts;
+    //     this.save(function (err, result) {
+    //         if (err) console.log(err);
+    //     });
+    // }
 
     var Activity = mongoose.model('Activity', activitySchema);
+    var Member = mongoose.model('Member', memberSchema);
 
     //get activity by id
     app.get('/api/activity/:id', function(req, res) {
@@ -58,6 +59,23 @@ module.exports = function(app) {
         });
     });
 
+    //update member
+    // app.put('/api/member', function(req, res) {
+    //
+    //     console.log('id', req.body._id);
+    //     console.log('body', req.body);
+    //
+    //     Member.findOneAndUpdate(
+    //         {_id: req.body._id},
+    //         req.body,
+    //         {},
+    //         function (err, member) {
+    //             if (err) res.send(err);
+    //             res.json(member);
+    //         }
+    //     );
+    // });
+
     //update activity
     app.put('/api/activity', function(req, res) {
         Activity.findOneAndUpdate(
@@ -66,7 +84,6 @@ module.exports = function(app) {
             {},
             function (err, activity) {
                 if (err) res.send(err);
-                activity.calcTotalCosts();
                 res.json(activity);
             }
         );
