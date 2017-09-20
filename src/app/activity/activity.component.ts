@@ -21,8 +21,11 @@ export class ActivityComponent implements OnInit {
   ) {}
 
   private getActivity(id) {
-     this.dataService.getActivityById(id)
-       .subscribe(activity => this.onActivityReceived(activity));
+    this.activity = this.dataService.getCurrentActivity();
+    if(this.activity == null) {
+      this.dataService.getActivityById(id)
+        .subscribe(activity => this.onActivityReceived(activity));
+    }
   }
 
   private onActivityReceived(activity:Activity) {
