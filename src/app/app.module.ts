@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CreateNewActivityComponent } from './create-new-activity/create-new-activity.component';
 import { ActivityComponent } from './activity/activity.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
+import { OverviewExpensesComponent } from './overview-expenses/overview-expenses.component';
 
 
 const appRoutes: Routes = [
@@ -27,6 +28,11 @@ const appRoutes: Routes = [
     component: AddExpenseComponent,
     data: { title: 'Add Expense' }
   },
+  {
+    path: 'overview-expenses',
+    component: OverviewExpensesComponent,
+    data: { title: 'Overview Expenses' }
+  },
   { path: '**', redirectTo: '/new' }
 ];
 
@@ -35,7 +41,8 @@ const appRoutes: Routes = [
     AppComponent,
     CreateNewActivityComponent,
     ActivityComponent,
-    AddExpenseComponent
+    AddExpenseComponent,
+    OverviewExpensesComponent
   ],
   imports: [
     RouterModule.forRoot(
