@@ -1,15 +1,25 @@
 <h3>{{activity?.title}}</h3>
 
-<h4>Members:</h4>
-<ul>
-  <li *ngFor="let member of activity?.members" (click)="selectMember(member)">{{member.name}}
-    <ul>
-      <li *ngFor="let expense of member.expenses">{{expense.title}} {{expense.amount}}</li>
-    </ul>
-  </li>
-</ul>
+<div class="card">
+  <div class="card-body">
+    <div class="form-group">
+      <label>You are:</label>
+      <select name="memberList" [ngModel]="currentMember" (ngModelChange)="onMemberSelected($event)">
+        <option *ngFor="let member of activity?.members" [ngValue]="member">
+          {{member.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
 
-<h5>You are: {{currentMember?.name}}</h5>
+<h4>Overview of expenses:</h4>
+<div class="card">
+  <div class="card-body">
+    <p>Your group spent in total: {{total}} EUR</p>
+    <button class="btn btn-primary" (click)="goToExpensesPage()">Add Expense</button>
+    <button class="btn btn-primary" (click)="goToExpensesOverviewPage()">View All Expenses</button>
+  </div>
+</div>
 
 
-<button class="btn btn-primary" (click)="goToExpensesPage()">Add Expense</button>
