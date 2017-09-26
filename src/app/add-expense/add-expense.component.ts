@@ -11,14 +11,19 @@ import {Expense} from "../model/expense";
 export class AddExpenseComponent implements OnInit {
 
   currentMember:Member;
-  expense:Expense = new Expense();
+  title:string;
+  amount:number;
 
   constructor(private dataService:DataService) { }
 
   addExpense() {
-    this.currentMember.expenses.push(this.expense);
+    var expense:Expense = new Expense();
+    expense.title = this.title;
+    expense.amount = Number(this.amount);
+    this.currentMember.expenses.push(expense);
     this.dataService.updateCurrentActivity();
-    this.expense = new Expense();
+    this.title = undefined;
+    this.amount = undefined;
   }
 
   ngOnInit() {
