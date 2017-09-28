@@ -23,22 +23,14 @@ export class ActivityComponent implements OnInit {
   ) {}
 
   private getActivity(id) {
-    this.activity = this.dataService.getCurrentActivity();
-    if(this.activity == null) {
-      this.dataService.getActivityById(id)
-        .subscribe(activity => this.onActivityReceived(activity));
-    } else {
-      this.getCurrentMember();
-      this.total = this.calculateTotal();
-    }
+    this.dataService.getActivityById(id)
+      .subscribe(activity => this.onActivityReceived(activity));
   }
 
   private onActivityReceived(activity:Activity):void {
     this.activity = activity;
     this.dataService.setCurrentActivity(activity);
-    //TODO avoid duplicate code (see getActivity function)
     this.getCurrentMember();
-    this.total = this.calculateTotal();
   }
 
   private getCurrentMember():void{
@@ -49,17 +41,6 @@ export class ActivityComponent implements OnInit {
     }
 
     this.dataService.setCurrentMember(this.currentMember);
-  }
-
-  private calculateTotal():number {
-    var total:number = 0;
-    this.activity.members.forEach(function(member:Member){
-      member.expenses.forEach(function(expense:Expense){
-        console.log(total, expense.amount)
-        total+=Number(expense.amount);
-      })
-    });
-    return total;
   }
 
   goToExpensesPage():void {
