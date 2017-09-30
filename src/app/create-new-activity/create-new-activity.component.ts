@@ -18,23 +18,34 @@ export class CreateNewActivityComponent implements OnInit {
     private router: Router
   ) { }
 
-  createActivity() {
+  onSubmit():void {
+    var validMembers:Member[] = [];
+    this.activity.members.forEach((member:Member) => {
+      if(!this.isBlank(member.name)){
+        validMembers.push(member);
+      }
+    });
+    this.activity.members = validMembers;
     this.dataService.createActivity(this.activity)
       .subscribe(
         activity => this.onActivityCreated(activity)
       );
   }
 
-  addMember() {
+  addMember():void {
     this.activity.members.push(new Member());
   }
 
-  private onActivityCreated(activity) {
+  private onActivityCreated(activity):void {
     this.navigateToActivityPage(activity);
   }
 
-  private navigateToActivityPage(activity:Activity) {
+  private navigateToActivityPage(activity:Activity):void {
     this.router.navigate(['activity', activity['_id']]); //TODO make models real Mongoose models to avoid dirty fix for accessing id via activity['_id']
+  }
+
+  private isBlank(str):boolean {
+    return (!str || /^\s*$/.test(str));
   }
 
   ngOnInit() {

@@ -1,12 +1,25 @@
 <h3>Create a new Activity</h3>
 
-<form name="createActivity">
+<form name="createActivityForm"  #createActivityForm="ngForm" (ngSubmit)="createActivityForm.form.valid && onSubmit()" novalidate>
+
   <div class="card gp-card-activity-data">
     <div class="card-body">
-        <div class="form-group">
-          <label for="activityName">Activity Name:</label>
-          <input type="text" class="form-control" id="activityName" name="activityName" placeholder="Enter name of Activity" [(ngModel)]="activity.title">
+      <div class="form-group">
+        <label for="activityName">Activity Name:</label>
+        <input type="text"
+               class="form-control"
+               id="activityName"
+               name="activityName"
+               placeholder="Enter name of Activity"
+               [(ngModel)]="activity.title"
+               required
+               #activityName="ngModel"
+        >
+        <div [hidden]="activityName.valid || (activityName.pristine && !createActivityForm.submitted)"
+             class="alert alert-danger">
+          Activity name is required
         </div>
+      </div>
     </div>
   </div>
 
@@ -17,25 +30,77 @@
         <h5>You:</h5>
         <div class="form-group">
           <label for="creatorName">Name:</label>
-          <input type="text" class="form-control" id="creatorName" name="creatorName" placeholder="Enter your name" [(ngModel)]="activity.members[0].name">
+          <input type="text"
+                 class="form-control"
+                 id="creatorName"
+                 name="creatorName"
+                 placeholder="Enter your name"
+                 [(ngModel)]="activity.members[0].name"
+                 required
+                 #creatorName="ngModel"
+          >
+          <div [hidden]="creatorName.valid || (creatorName.pristine && !createActivityForm.submitted)"
+               class="alert alert-danger">
+            Your name is required
+          </div>
         </div>
         <div class="form-group">
           <label for="creatorEmail">Email address</label>
-          <input type="email" class="form-control" id="creatorEmail" name="creatorEmail" placeholder="Enter your email" [(ngModel)]="activity.members[0].email">
+          <input type="email"
+                 class="form-control"
+                 id="creatorEmail"
+                 name="creatorEmail"
+                 placeholder="Enter your email"
+                 [(ngModel)]="activity.members[0].email"
+                 required
+                 email
+                 #creatorEmail="ngModel"
+          >
+          <div [hidden]="creatorEmail.valid || (creatorEmail.pristine && !createActivityForm.submitted)"
+               class="alert alert-danger">
+            Your email is required
+          </div>
         </div>
       </div>
-      <div *ngFor="let member of activity.members | slice:1; let i=index" class="gp-new-person">
-        <h5>Person {{i+2}}:</h5>
+
+      <div>
+        <h5>Person 2</h5>
         <div class="form-group">
-          <label for="{{'creatorName' + i}}">Name:</label>
-          <input type="text" class="form-control" id="{{'creatorName' + i}}" name="{{'creatorName' + i}}" placeholder="Enter your name" [(ngModel)]="member.name">
+          <label for="memberName2">Name:</label>
+          <input type="text"
+                 class="form-control"
+                 id="memberName2"
+                 name="memberName2"
+                 placeholder="Enter your name"
+                 [(ngModel)]="activity.members[1].name"
+                 required
+                 #memberName2="ngModel"
+          >
+          <div [hidden]="memberName2.valid || (memberName2.pristine && !createActivityForm.submitted)"
+               class="alert alert-danger">
+            Name is required
+          </div>
         </div>
       </div>
-      <button class="btn btn-primary" (click)="addMember()">Add Person</button>
+
+      <div *ngFor="let member of activity.members | slice:2; let i=index" class="gp-new-person">
+        <h5>Person {{i+3}}:</h5>
+        <div class="form-group">
+          <label for="{{'memberName' + i}}">Name:</label>
+          <input type="text"
+                 class="form-control"
+                 id="{{'memberName' + i}}"
+                 name="{{'memberName' + i}}"
+                 placeholder="Enter your name"
+                 [(ngModel)]="member.name"
+          >
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="addMember()">Add Person</button>
     </div>
   </div>
 
   <div class="gp-page-actions">
-    <button type="submit" class="btn btn-primary" (click)="createActivity()">Create Activity</button>
+    <button type="submit" class="btn btn-primary">Create Activity</button>
   </div>
 </form>

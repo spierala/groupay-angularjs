@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { DataService } from './data.service';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { DataService } from './data.service';
 import { CreateNewActivityComponent } from './create-new-activity/create-new-activity.component';
 import { ActivityComponent } from './activity/activity.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
