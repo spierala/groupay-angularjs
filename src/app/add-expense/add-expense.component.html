@@ -4,19 +4,46 @@
   You are {{currentMember?.name}}
 </p>
 
-<div class="card">
-  <div class="card-body">
-    <div class="form-group">
-      <label for="expenseName">What for?</label>
-      <input type="text" class="form-control" id="expenseName" name="expenseName" placeholder="Ski Pass" [(ngModel)]="title">
-    </div>
-    <div class="form-group">
-      <label for="amount">How much</label>
-      <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount" [(ngModel)]="amount">
+
+<form name="addExpenseForm"  #addExpenseForm="ngForm" (ngSubmit)="addExpenseForm.form.valid && onSubmit()" novalidate>
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="expenseName">What for?</label>
+        <input type="text"
+               class="form-control"
+               id="expenseName"
+               name="expenseName"
+               placeholder="Ski Pass"
+               [(ngModel)]="title"
+               required
+               #expenseName="ngModel"
+        >
+        <div [hidden]="expenseName.valid || (expenseName.pristine && !addExpenseForm.submitted)"
+             class="alert alert-danger">
+          Expense name is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="amount">How much</label>
+        <input type="text"
+               class="form-control"
+               id="amount"
+               name="amount"
+               placeholder="Amount"
+               [(ngModel)]="amount"
+               required
+               #expenseAmount="ngModel"
+        >
+        <div [hidden]="expenseAmount.valid || (expenseAmount.pristine && !addExpenseForm.submitted)"
+             class="alert alert-danger">
+          Amount is required
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="gp-page-actions">
-  <button class="btn btn-primary" (click)="addExpense()">Add Expense</button>
-</div>
+  <div class="gp-page-actions">
+    <button type="submit" class="btn btn-primary">Add Expense</button>
+  </div>
+</form>

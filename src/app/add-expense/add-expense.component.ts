@@ -16,7 +16,7 @@ export class AddExpenseComponent implements OnInit {
 
   constructor(private dataService:DataService) { }
 
-  addExpense() {
+  onSubmit() {
     var expense:Expense = new Expense();
     expense.title = this.title;
     expense.amount = Number(this.amount);
