@@ -1,8 +1,8 @@
 <h3>{{activity?.title}}</h3>
 
-<div class="card">
+<div class="card mb-4">
   <div class="card-body">
-    <div class="form-group">
+    <div>
       <label>You are: {{currentMember?.name}}</label>
       <select name="memberList" [ngModel]="currentMember" (ngModelChange)="onMemberSelected($event)">
         <option *ngFor="let member of activity?.members" [ngValue]="member">
@@ -14,7 +14,7 @@
 </div>
 
 <h4>Overview of expenses:</h4>
-<div class="card">
+<div class="card mb-4">
   <div class="card-body">
     <p>Your group spent in total: {{activity?.totalCosts}} EUR</p>
     <button class="btn btn-primary" (click)="goToExpensesPage()">Add Expense</button>
@@ -22,10 +22,12 @@
   </div>
 </div>
 
-<h4>Settle Debts:</h4>
-<div class="card">
-  <div class="card-body">
-    <p *ngFor="let transfer of activity?.transfers">{{transfer.principal.name}} gives {{transfer.amount}} EUR to {{transfer.beneficiary.name}}</p>
+<div *ngIf="activity?.transfers?.length > 0">
+  <h4>Settle Debts:</h4>
+  <div class="card mb-4">
+    <div class="card-body">
+      <p *ngFor="let transfer of activity?.transfers">{{transfer.principal.name}} gives {{transfer.amount}} EUR to {{transfer.beneficiary.name}}</p>
+    </div>
   </div>
 </div>
 

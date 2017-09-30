@@ -2,7 +2,7 @@
 
 <form name="createActivityForm"  #createActivityForm="ngForm" (ngSubmit)="createActivityForm.form.valid && onSubmit()" novalidate>
 
-  <div class="card gp-card-activity-data">
+  <div class="card mb-4">
     <div class="card-body">
       <div class="form-group">
         <label for="activityName">Activity Name:</label>
@@ -83,7 +83,7 @@
         </div>
       </div>
 
-      <div *ngFor="let member of activity.members | slice:2; let i=index" class="gp-new-person">
+      <div *ngFor="let member of activity.members | slice:2; let i=index" class="mt-1">
         <h5>Person {{i+3}}:</h5>
         <div class="form-group">
           <label for="{{'memberName' + i}}">Name:</label>
