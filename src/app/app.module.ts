@@ -10,6 +10,8 @@ import { CreateNewActivityComponent } from './create-new-activity/create-new-act
 import { ActivityComponent } from './activity/activity.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { OverviewExpensesComponent } from './overview-expenses/overview-expenses.component';
+import { MemberSelectorComponent } from './member-selector/member-selector.component';
+import { GpSelectComponent } from './ui-components/gp-select/gp-select.component';
 
 
 const appRoutes: Routes = [
@@ -42,7 +44,9 @@ const appRoutes: Routes = [
     CreateNewActivityComponent,
     ActivityComponent,
     AddExpenseComponent,
-    OverviewExpensesComponent
+    OverviewExpensesComponent,
+    MemberSelectorComponent,
+    GpSelectComponent
   ],
   imports: [
     RouterModule.forRoot(

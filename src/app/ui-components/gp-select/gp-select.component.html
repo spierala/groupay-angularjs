@@ -1,0 +1,5 @@
+<select [ngModel]="selectedOption" (ngModelChange)="onOptionSelectedCallback($event)">
+  <option *ngFor="let option of options" [ngValue]="option">
+    {{option.name}}
+  </option>
+</select>

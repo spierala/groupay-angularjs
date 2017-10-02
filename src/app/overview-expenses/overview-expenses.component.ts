@@ -6,7 +6,6 @@ import {Expense} from "../model/expense";
 import {OverviewExpense} from "../model/overviewExpense";
 
 @Component({
-  selector: 'app-overview-expenses',
   templateUrl: './overview-expenses.component.html',
   styleUrls: ['./overview-expenses.component.scss']
 })

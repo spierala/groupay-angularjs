@@ -1,9 +1,6 @@
 <h3>Add expense</h3>
 
-<p>
-  You are {{currentMember?.name}}
-</p>
-
+<gp-member-selector></gp-member-selector>
 
 <form name="addExpenseForm"  #addExpenseForm="ngForm" (ngSubmit)="addExpenseForm.form.valid && onSubmit()" novalidate>
   <div class="card">

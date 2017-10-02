@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -7,6 +7,8 @@ import {Activity} from "./model/activity";
 
 @Injectable()
 export class DataService {
+  activityUpdatedEvent: EventEmitter<any> = new EventEmitter();
+
   private currentMember:Member;
   private currentActivity:Activity;
   private headers = new Headers({'Content-Type': 'application/json'});
@@ -30,7 +32,10 @@ export class DataService {
   constructor(private http: Http) { }
 
   getActivityById = function(id) {
-    return this.http.get('/api/activity/' + id).map((res:Response) => res.json());
+    this.http.get('/api/activity/' + id).map((res:Response) => res.json())
+    .subscribe(response =>
+        this.activityUpdatedEvent.emit(response)
+    );
   }
 
   createActivity = function(activity) {

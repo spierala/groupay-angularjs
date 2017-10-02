@@ -5,7 +5,6 @@ import { Member } from '../model/member';
 import { DataService } from '../data.service';
 
 @Component({
-  selector: 'app-create-new-activity',
   templateUrl: './create-new-activity.component.html',
   styleUrls: ['./create-new-activity.component.scss']
 })
