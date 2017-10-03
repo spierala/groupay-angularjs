@@ -59,6 +59,7 @@ module.exports = function(app) {
         }
       });
 
+      //collect the transfers which will be needed to settle all depts
       function collectTransfer(beneficiary, principal) {
         var amount = 0;
         var principalDebtAbsolute = Math.abs(principal.debt);
