@@ -44,61 +44,72 @@ module.exports = function(app) {
     };
 
     activitySchema.methods.settleDebts = function() {
-      var beneficiaries = []; //Members who will receive money
-      var principals = []; //Members who will send money
-      var transfers = [];
+      var beneficiaries = [], //Members who will receive money
+          principals = [], //Members who will send money
+          transfers = [],
+          beneficiaryIndex = 0,
+          principalIndex = 0;
 
+      //group members in beneficiaries and principals
       this.members.forEach(function(member) {
         if(member.debt > 0) {
           beneficiaries.push(member);
         } else {
-          member.debt = member.debt;
           principals.push(member);
         }
       });
 
-      function payBack(beneficiary, principals) {
-        var principalIndex = 0;
+      function collectTransfer(beneficiary, principal) {
+        var amount = 0;
+        var principalDebtAbsolute = Math.abs(principal.debt);
 
-        function transfer(beneficiary, principal) {
-          var amount = 0;
-          var principalDebtAbsolute = Math.abs(principal.debt);
-
-          if(principalDebtAbsolute > 0) {
-            if (beneficiary.debt >= principalDebtAbsolute) {
-              amount = principalDebtAbsolute; //everything
-            } else {
-              amount = beneficiary.debt; //part
-            }
-
-            beneficiary.debt -= amount;
-            principal.debt += amount;
-
-            transfers.push({
-              principal: principal,
-              beneficiary: beneficiary,
-              amount: amount
-            });
+        if(principalDebtAbsolute > 0) {
+          if (beneficiary.debt >= principalDebtAbsolute) {
+            amount = principalDebtAbsolute; //principal transfers "everything"
+          }
+          else {
+            amount = beneficiary.debt; //principal transfers only a part which is enough to satisfy the beneficiary
           }
 
-          if (beneficiary.debt > 0) {
-            principalIndex++;
-            transfer(beneficiary, principals[principalIndex]);
-          }
+          beneficiary.debt -= amount;
+          principal.debt += amount;
+
+          transfers.push({
+            principal: principal,
+            beneficiary: beneficiary,
+            amount: amount
+          });
         }
 
-        transfer(beneficiary, principals[principalIndex]);
+        if (beneficiary.debt > 0) {
+          //Beneficiary is NOT satisfied
+          //Recursive call of the collectTransfer function until the current beneficiary is satisfied
+          //Do collectTransfer with the current beneficiary and the next principal
+          principalIndex++;
+          collectTransfer(beneficiary, principals[principalIndex]);
+        }
+        else {
+          //Beneficiary is satisfied
+          beneficiaryIndex++;
+          if(beneficiaryIndex < beneficiaries.length) {
+            //Recursive call of the collectTransfer function until all beneficiaries are satisfied
+            //Do collectTransfer with the next beneficiary and the first principal
+            principalIndex = 0;
+            collectTransfer(beneficiaries[beneficiaryIndex], principals[principalIndex]);
+          }
+        }
       }
 
-      beneficiaries.forEach(function(beneficiary){
-        payBack(beneficiary, principals);
-      });
+      if(beneficiaries.length > 0) {
+        //Trigger recursive call of collectTransfer fn
+        collectTransfer(beneficiaries[beneficiaryIndex], principals[principalIndex]);
+      }
 
       this.transfers = transfers;
     };
 
+
     var Activity = mongoose.model('Activity', activitySchema);
-    var Member = mongoose.model('Member', memberSchema);
 
     //get activity by id
     app.get('/api/activity/:id', function(req, res) {
@@ -134,7 +145,7 @@ module.exports = function(app) {
         );
     });
 
-    // route to handle all angular requests
+    //route to handle all angular requests
     app.get('*', function(req, res) {
         res.sendfile('./dist/index.html');
     });
