@@ -15,7 +15,11 @@ export class AddExpenseComponent implements OnInit {
 
   constructor(private dataService:DataService) { }
 
-  onSubmit() {
+  private onCurrentMemberUpdated():void {
+    this.currentMember = this.dataService.getCurrentMember();
+  }
+
+  onSubmit():void {
     var expense:Expense = new Expense();
     expense.title = this.title;
     expense.amount = Number(this.amount);
@@ -26,6 +30,7 @@ export class AddExpenseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentMember = this.dataService.getCurrentMember();
+    this.onCurrentMemberUpdated();
+    this.dataService.memberUpdatedEvent.subscribe(()=> this.onCurrentMemberUpdated());
   }
 }
